@@ -34,7 +34,7 @@ export default function App() {
     }
 
     return (
-        <div className="mx-auto flex min-h-screen max-w-5xl flex-col">
+        <div className="mx-auto flex h-screen max-w-5xl flex-col">
             <div className="min-h-0 flex-1 overflow-y-auto p-4">
                 <div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900">
                     <h2 className="mb-2 font-semibold">Actor information</h2>
@@ -77,7 +77,7 @@ export default function App() {
             </div>
             <form
                 onSubmit={handleSubmit}
-                className="flex gap-2 border-t border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950"
+                className="flex shrink-0 gap-2 border-t border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950"
             >
                 <input
                     type="text"
