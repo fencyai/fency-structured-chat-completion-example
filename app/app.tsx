@@ -4,7 +4,7 @@ import { useActorQandA } from '@/hooks/useActorQandA'
 import { ACTOR_INFO_TEXT } from '@/lib/actorInfo'
 import { fetchCreateAgentTaskClientToken } from '@/lib/fetchCreateAgentTaskClientToken'
 import { AgentTaskProgress } from '@fencyai/react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 /**
@@ -18,12 +18,25 @@ export const actorResponseSchema = z.object({
 
 export default function App() {
     const [input, setInput] = useState('')
+    const scrollRef = useRef<HTMLDivElement>(null)
     const { agentTasks, isSubmitting, sendMessage } = useActorQandA({
         fetchCreateAgentTaskClientToken,
         actorInfoText: ACTOR_INFO_TEXT,
         jsonSchema: JSON.stringify(z.toJSONSchema(actorResponseSchema)),
         model: 'anthropic/claude-sonnet-4.5',
     })
+
+    useEffect(() => {
+        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
+    }, [agentTasks])
+
+    useEffect(() => {
+        if (!isSubmitting) return
+        const id = setInterval(() => {
+            scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
+        }, 100)
+        return () => clearInterval(id)
+    }, [isSubmitting])
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
@@ -35,7 +48,10 @@ export default function App() {
 
     return (
         <div className="mx-auto flex h-screen max-w-5xl flex-col">
-            <div className="min-h-0 flex-1 overflow-y-auto p-4">
+            <div
+                ref={scrollRef}
+                className="min-h-0 flex-1 overflow-y-auto p-4"
+            >
                 <div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900">
                     <h2 className="mb-2 font-semibold">Actor information</h2>
                     <p className="whitespace-pre-wrap text-sm text-neutral-700 dark:text-neutral-300">
