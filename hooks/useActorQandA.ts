@@ -35,8 +35,8 @@ export function useActorQandA({
 ${actorInfoText}`
 
         const messages = [
-            { role: 'system' as const, content: systemContent },
-            { role: 'user' as const, content: trimmed },
+            { role: 'SYSTEM' as const, content: systemContent },
+            { role: 'USER' as const, content: trimmed },
         ]
 
         try {
