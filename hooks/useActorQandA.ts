@@ -40,12 +40,13 @@ ${actorInfoText}`
         ]
 
         try {
-            await createAgentTask({
+            const response = await createAgentTask({
                 type: 'StructuredChatCompletion',
                 messages,
                 model,
                 jsonSchema,
             })
+            console.log(response)
         } catch {
             // Task error will be surfaced via task.error
         } finally {
