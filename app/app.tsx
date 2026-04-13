@@ -2,7 +2,6 @@
 
 import { ModelSelector } from '@/components/ModelSelector'
 import { TemperatureSlider } from '@/components/TemperatureSlider'
-import { TopPSlider } from '@/components/TopPSlider'
 import { useActorQandA } from '@/hooks/useActorQandA'
 import { ACTOR_INFO_TEXT } from '@/lib/actorInfo'
 import { fetchCreateAgentTaskClientToken } from '@/lib/fetchCreateAgentTaskClientToken'
@@ -26,7 +25,6 @@ export default function App() {
         'anthropic/claude-sonnet-4.5'
     )
     const [temperature, setTemperature] = useState(1)
-    const [topP, setTopP] = useState(1)
     const scrollRef = useRef<HTMLDivElement>(null)
     const { agentTasks, isSubmitting, sendMessage } = useActorQandA({
         fetchCreateAgentTaskClientToken,
@@ -34,7 +32,6 @@ export default function App() {
         jsonSchema: JSON.stringify(z.toJSONSchema(actorResponseSchema)),
         model,
         temperature,
-        topP,
     })
 
     useEffect(() => {
@@ -72,14 +69,11 @@ export default function App() {
                     </summary>
                     <div className="mt-4 flex flex-col gap-4">
                         <ModelSelector value={model} onChange={setModel} />
-                        <div className="grid gap-4 sm:grid-cols-2">
-                            <TemperatureSlider
-                                model={model}
-                                value={temperature}
-                                onChange={setTemperature}
-                            />
-                            <TopPSlider value={topP} onChange={setTopP} />
-                        </div>
+                        <TemperatureSlider
+                            model={model}
+                            value={temperature}
+                            onChange={setTemperature}
+                        />
                     </div>
                 </details>
 
