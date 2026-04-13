@@ -7,6 +7,8 @@ interface UseActorQandAProps extends UseAgentTasksProps {
     actorInfoText: string
     jsonSchema: string
     model: AgentTaskModel
+    temperature: number
+    topP: number
 }
 
 interface UseActorQandA {
@@ -19,6 +21,8 @@ export function useActorQandA({
     actorInfoText,
     jsonSchema,
     model,
+    temperature,
+    topP,
     ...agentTasksProps
 }: UseActorQandAProps): UseActorQandA {
     const { agentTasks, createAgentTask } = useAgentTasks(agentTasksProps)
@@ -45,6 +49,8 @@ ${actorInfoText}`
                 messages,
                 model,
                 jsonSchema,
+                temperature,
+                topP,
             })
             console.log(response)
         } catch {
